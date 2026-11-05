@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help & Contact — Paper Land</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="help">
+<div id="site-header"></div>
+<main>
+
+<section class="wrap">
+  <div class="page-head" style="padding-bottom:30px"><div class="eyebrow">Help &amp; Contact</div><h1>How can we help?</h1><p>Answers to common questions about orders, shipping and our notebooks. Can't find what you need? Send us a message.</p></div>
+  <div class="help">
+    <div id="faq">
+      <h2>Frequently asked questions</h2>
+      <h3 class="group">Orders &amp; shipping</h3>
+      <details id="shipping"><summary>How much is shipping?</summary><div class="body">Standard shipping is $9.95 anywhere in Australia, and free on orders over $60. Orders are dispatched from Adelaide within 1–2 business days and usually arrive in 2–7 business days.</div></details>
+      <details><summary>Do you ship internationally?</summary><div class="body">Not yet — we currently ship within Australia only. Join the Paper Club to hear when that changes.</div></details>
+      <details><summary>Can I return or exchange an item?</summary><div class="body">Unused items in original condition can be returned within 30 days of delivery. Contact us with your order number and we'll send return instructions. Faulty items are always replaced free of charge.</div></details>
+      <h3 class="group">Our notebooks</h3>
+      <details><summary>What pens work best?</summary><div class="body">Our 120gsm paper is tested with gel pens, ballpoints, pencils and fine fountain pens. Very wet markers may show through, so test on the last page first.</div></details>
+      <details><summary>What's the difference between dot grid, lined and plain?</summary><div class="body">Dot grid is the most flexible — great for bullet journaling and layouts. Lined is best for long-form writing. Plain is for sketching and lettering.</div></details>
+      <details><summary>Is the planner dated?</summary><div class="body">No. The Someday planner is undated, so you can start in any month and skip weeks without wasting pages.</div></details>
+      <h3 class="group">Gifts &amp; wholesale</h3>
+      <details><summary>Do you offer gift wrapping?</summary><div class="body">Our gift sets come in a kraft gift box. For single notebooks, add a note at checkout and we'll include a handwritten card.</div></details>
+      <details><summary>Can my shop stock Paper Land?</summary><div class="body">Yes — we'd love to hear from independent stationery, gift and book shops. Choose "Wholesale" in the contact form.</div></details>
+    </div>
+    <div id="contact">
+      <form class="cform" id="cForm">
+        <h2>Send us a message</h2>
+        <label for="cn">Name</label><input id="cn" required>
+        <label for="ce">Email</label><input id="ce" type="email" required>
+        <label for="ct">Topic</label><select id="ct"><option>Order question</option><option>Returns</option><option>Wholesale</option><option>Something else</option></select>
+        <label for="cm">Message</label><textarea id="cm" required></textarea>
+        <button class="btn solid" type="submit">Send Message</button>
+        <div class="ok" id="cOk">Thanks — we'll reply within two business days.</div>
+      </form>
+      <div class="contact-lines">Email: hello@paperland.com.au<br>Based in Adelaide, South Australia<br>Replies Monday–Friday, 9am–5pm ACST</div>
+    </div>
+  </div>
+  <div class="sec-head" id="stockists" style="padding-top:20px"><div><div class="eyebrow">Stockists</div><h2>Find us in person.</h2></div></div>
+  <div class="stockists">
+    <div><h4>Adelaide CBD</h4><p>Stockist coming soon. Interested in stocking Paper Land? Get in touch.</p></div>
+    <div><h4>Adelaide Hills</h4><p>Pop-up stalls at local markets — dates announced in the Paper Club.</p></div>
+    <div><h4>Online</h4><p>The full range is always available here, shipped Australia-wide.</p></div>
+  </div>
+</section>
+</main>
+<div id="site-footer"></div>
+<script src="app.js"></script>
+</body>
+</html>

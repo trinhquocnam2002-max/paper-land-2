@@ -1,0 +1,39 @@
+# ---- Secrets: never commit these ----
+# Environment files (.env, .env.local, .env.production, etc.)
+.env
+.env.*
+*.env
+# Keep a safe template if you create one
+!.env.example
+
+# API keys, tokens and credentials
+*.key
+*.pem
+*.p12
+*.pfx
+*secret*
+*secrets*
+*credentials*
+*.credentials.json
+service-account*.json
+api-keys.*
+apikeys.*
+config.local.*
+
+# ---- System and editor files ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# ---- Dependencies and build output (if added later) ----
+node_modules/
+dist/
+build/
+.cache/
+
+# ---- Logs ----
+*.log
+npm-debug.log*
