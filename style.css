@@ -444,3 +444,27 @@ body{font-weight:400;font-size:15px;letter-spacing:-.005em}
   .w-copy{padding:26px 24px 26px}
 }
 @media (prefers-reduced-motion:reduce){.welcome,.w-box{transition:none}}
+
+/* ===== guest brand (Crabit) & product photos ===== */
+.pimg{display:block;width:100%;height:100%;object-fit:cover}
+.card .stage .pimg{position:absolute;inset:0;transition:transform .5s}
+.card:hover .stage .pimg{transform:scale(1.04)}
+.gallery .main{position:relative}
+.gallery .main .pimg{position:absolute;inset:0}
+.thumbs button{position:relative;overflow:hidden}
+.thumbs .pimg{position:absolute;inset:0}
+.ch-visual .pimg{width:31%;height:auto;aspect-ratio:4/5;border-radius:10px;box-shadow:0 18px 34px -18px rgba(40,30,20,.45)}
+.ch-visual .pimg:nth-of-type(2){transform:translateY(-22px)}
+.nb.gb{padding:0 0 0 13%}
+.nb.gb .gb-l{margin-top:10cqw;display:inline-block;background:#1F1D1B;color:#F3EEE6;font-size:4.2cqw;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1.2cqw 2.4cqw}
+.nb.gb.dark .gb-l{background:#F3EEE6;color:#1F1D1B}
+.nb.gb .w{margin-top:52cqw;font-size:14cqw;max-width:66cqw}
+.nb.gb .gb-f{font-size:4.4cqw;font-weight:500;margin-top:3cqw;opacity:.75}
+.brandline{font-size:13px;color:var(--ink-soft);margin:-10px 0 18px}
+.brandline b{color:var(--ink);font-weight:600}
+
+/* ===== home hero colour fix (Option A) ===== */
+.hero h1 em{background:none;padding:0;color:#C77B57}
+.hero .eyebrow{color:#C77B57}
+.hero-stack .shelf{display:none}
+.hero-stack{height:470px}

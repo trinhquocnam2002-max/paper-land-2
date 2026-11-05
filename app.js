@@ -9,6 +9,8 @@ const COLLECTIONS = {
     blurb:'Long light over the Hills, a cuppa gone cold beside the laptop, the to-do list quietly renegotiated. Notebooks for the slower half of the day.'},
   studio:{name:'Someday Studio',chapter:'Chapter 3 · Planners & Pocket Notes',sub:'for the plans you keep meaning to make',bg:'#E3E6EE',
     blurb:'Undated planners and pocket notebooks for the plans you keep meaning to make. Start in any month, skip a week without guilt, begin again whenever.'},
+  crabit:{name:'Crabit Coffee Series',chapter:'Guest Brand · by Crabit, Vietnam',sub:'a Vietnamese stationery brand, stocked by Paper Land',bg:'#E6E1DA',
+    blurb:'We are proud to stock Crabit, a stationery brand from Vietnam. Their Coffee Series names every notebook after a coffee bean or a café favourite — from Liberica and Robusta beans to iced milk coffee. A5 notebooks with 130gsm paper in dot, grid and lined.'},
 };
 
 const PRODUCTS = {
@@ -32,6 +34,33 @@ const PRODUCTS = {
     desc:'All three Saigon Mornings notebooks — iced coffee, alleyway and street food — packed together in a recycled kraft gift box.'},
   'arvo-set':{name:'Adelaide Arvo Set',set:['arvo','brekkie','cuppa'],col:'sets',price:89,fmt:'3 × A5 notebooks · gift box',tag:'Save $13',
     desc:'All three Adelaide Arvo notebooks — arvo, brekkie and cuppa — packed together in a recycled kraft gift box.'},
+  /* ---- Guest brand: Crabit Coffee Series (stocked by Paper Land) ---- */
+  'crabit-liberica':{title:'Coffee Beans Notebook – Liberica',short:'Liberica',series:'Coffee Beans',brand:'Crabit',col:'crabit',price:24,fmt:'A5 · grid',ruling:'Grid',paper:'130gsm',
+    imgs:['img/crabit-liberica.jpg','img/crabit-liberica-journal.jpg'],bg:'#8C857A',tag:'Crabit',
+    desc:'Named after Liberica, a rare and bold coffee bean grown across Southeast Asia. A calm taupe cover with an elastic closure, and grid pages for planning, lists and structured journaling.'},
+  'crabit-robusta':{title:'Coffee Beans Notebook – Robusta',short:'Robusta',series:'Coffee Beans',brand:'Crabit',col:'crabit',price:24,fmt:'A5 · dot grid',ruling:'Dot grid',paper:'130gsm',bg:'#4A3A30',dark:1,
+    desc:'Named after Robusta, the strong, punchy bean behind most Vietnamese coffee. Dot grid pages for bullet journaling, layouts and sketches.'},
+  'crabit-excela':{title:'Coffee Beans Notebook – Excela',short:'Excela',series:'Coffee Beans',brand:'Crabit',col:'crabit',price:24,fmt:'A5 · lined',ruling:'Lined',paper:'130gsm',bg:'#8A6A4F',dark:1,
+    desc:'Named after Excelsa, an uncommon bean known for its tart, fruity flavour. Lined pages for long-form writing, class notes and journaling.'},
+  'crabit-arabica':{title:'Coffee Beans Notebook – Arabica',short:'Arabica',series:'Coffee Beans',brand:'Crabit',col:'crabit',price:24,fmt:'A5 · lined',ruling:'Lined',paper:'130gsm',bg:'#CDB79C',
+    desc:'Named after Arabica, the smooth, aromatic bean loved by cafés around the world. Lined pages for everyday writing and study notes.'},
+  'crabit-white-coffee':{title:'White Coffee Notebook',short:'White Coffee',series:'Café',brand:'Crabit',col:'crabit',price:24,fmt:'A5 · dot grid',ruling:'Dot grid',paper:'130gsm',bg:'#EFE6D8',
+    desc:'Inspired by bac xiu, Saigon’s sweet, milky white coffee. Dot grid pages for journaling, planning and doodles.'},
+  'crabit-iced-black':{title:'Iced Black Coffee Notebook',short:'Iced Black',series:'Café',brand:'Crabit',col:'crabit',price:24,fmt:'A5 · dot grid',ruling:'Dot grid',paper:'130gsm',bg:'#232120',dark:1,
+    desc:'Inspired by den da, Vietnam’s strong iced black coffee. Dot grid pages for focused plans and to-do lists.'},
+  'crabit-coconut':{title:'Coconut Coffee Notebook',short:'Coconut Coffee',series:'Café',brand:'Crabit',col:'crabit',price:24,fmt:'A5 · grid',ruling:'Grid',paper:'130gsm',bg:'#E9E4DA',
+    desc:'Inspired by coconut coffee, a creamy café favourite from Hanoi. Grid pages for tables, trackers and neat layouts.'},
+  'crabit-iced-milk':{title:'Iced Milk Coffee Notebook',short:'Iced Milk',series:'Café',brand:'Crabit',col:'crabit',price:24,fmt:'A5 · grid',ruling:'Grid',paper:'130gsm',bg:'#A57A55',dark:1,
+    desc:'Inspired by nau da, Vietnamese iced coffee with condensed milk. Grid pages for planning, study and project notes.'},
+  'crabit-americano':{title:'Coffeeine Notebook – Americano',short:'Americano',series:'Coffeeine',brand:'Crabit',col:'crabit',price:22,fmt:'Dotted notebook',ruling:'Dot grid',
+    imgs:['img/crabit-americano.jpg','img/crabit-coffeeine-trio.jpg'],bg:'#262423',tag:'Crabit',
+    desc:'From Crabit’s Coffeeine line: a black hardcover with a dictionary-style definition of the americano, an elastic closure and dotted pages.'},
+  'crabit-espresso':{title:'Coffeeine Notebook – Espresso',short:'Espresso',series:'Coffeeine',brand:'Crabit',col:'crabit',price:22,fmt:'Dotted notebook',ruling:'Dot grid',
+    imgs:['img/crabit-coffeeine-trio.jpg'],bg:'#D39A7B',
+    desc:'From Crabit’s Coffeeine line: a warm peach hardcover with a dictionary-style definition of the espresso and dotted pages. Shown here with Latte and Americano.'},
+  'crabit-latte':{title:'Coffeeine Notebook – Latte',short:'Latte',series:'Coffeeine',brand:'Crabit',col:'crabit',price:22,fmt:'Dotted notebook',ruling:'Dot grid',
+    imgs:['img/crabit-latte.jpg','img/crabit-coffeeine-trio.jpg'],bg:'#E2D9CC',tag:'Crabit',
+    desc:'From Crabit’s Coffeeine line: a soft beige hardcover with a dictionary-style definition of the latte, an elastic closure and dotted pages.'},
 };
 
 const JOURNAL = {
@@ -76,11 +105,14 @@ const NOTES=[
 const FREE_SHIP = 60;
 const $ = (s,el=document)=>el.querySelector(s);
 const money = n => '$'+n.toFixed(2);
-const titleOf = id => { const p=PRODUCTS[id]; if(p.set) return p.name; if(p.spiral) return 'Pocket Notes'; return p.name.replace(/\b\w/g,c=>c.toUpperCase())+' Notebook'; };
+const titleOf = id => { const p=PRODUCTS[id]; if(p.title) return p.title; if(p.set) return p.name; if(p.spiral) return 'Pocket Notes'; return p.name.replace(/\b\w/g,c=>c.toUpperCase())+' Notebook'; };
 
 /* ---------- covers ---------- */
+const img = (src,alt) => `<img class="pimg" src="${src}" alt="${alt}" loading="lazy">`;
 function cover(id){
   const p=PRODUCTS[id];
+  if(p.imgs) return img(p.imgs[0],titleOf(id));
+  if(p.brand) return `<div class="nb gb ${p.dark?'dark':''}" style="background:${p.bg}"><div class="gb-l">${p.brand} · ${p.series}</div><div class="w">${p.short.toLowerCase()}</div><div class="gb-f">${p.fmt}</div></div>`;
   if(p.set) return `<div class="set">${p.set.map(cover).join('')}</div>`;
   if(p.spiral) return `<div class="nb spiral gingham"><div class="w">pocket notes</div></div>`;
   return `<div class="nb ${p.dark?'dark':''}" style="background:${p.bg}"><div class="w">${p.name}</div><div class="ph"><span>${p.ph}</span><span>noun</span></div><div class="rule"></div><div class="def">${p.def}</div></div>`;
@@ -88,7 +120,7 @@ function cover(id){
 function card(id){
   const p=PRODUCTS[id];
   return `<div class="card"><a class="stage-link" href="product.html#${id}"><div class="stage">${p.tag?`<span class="tag">${p.tag}</span>`:''}${cover(id)}</div>
-    <h3>${titleOf(id)}</h3></a><div class="meta">${p.fmt}</div>
+    <h3>${titleOf(id)}</h3></a><div class="meta">${p.brand?`by ${p.brand} · `:''}${p.fmt}${p.paper?' · '+p.paper:''}</div>
     <div class="row"><span class="price">${money(p.price)} AUD</span><button class="add" data-add="${id}">Add to Cart</button></div></div>`;
 }
 
@@ -129,7 +161,7 @@ function chrome(){
       <div class="fbrand"><a href="index.html" class="logo">Paper <span>Land</span></a>
         <p>Notebooks for slow mornings — designed in Adelaide, inspired by Saigon.</p>
         <p style="margin-top:14px">hello@paperland.com.au</p></div>
-      <div><h4>Shop</h4><ul><li><a href="shop.html">Shop All</a></li><li><a href="collections.html#saigon">Saigon Mornings</a></li><li><a href="collections.html#adelaide">Adelaide Arvo</a></li><li><a href="collections.html#studio">Someday Studio</a></li><li><a href="shop.html#sets">Gift Sets</a></li></ul></div>
+      <div><h4>Shop</h4><ul><li><a href="shop.html">Shop All</a></li><li><a href="collections.html#saigon">Saigon Mornings</a></li><li><a href="collections.html#adelaide">Adelaide Arvo</a></li><li><a href="collections.html#studio">Someday Studio</a></li><li><a href="collections.html#crabit">Crabit Coffee Series</a></li><li><a href="shop.html#sets">Gift Sets</a></li></ul></div>
       <div><h4>Help</h4><ul><li><a href="help.html#shipping">Shipping &amp; Returns</a></li><li><a href="help.html#stockists">Stockists</a></li><li><a href="help.html#contact">Contact Us</a></li><li><a href="help.html#faq">FAQ</a></li></ul></div>
       <div><h4>Paper Land</h4><ul><li><a href="about.html">Our Story</a></li><li><a href="journal.html">Journal</a></li><li><a href="https://www.instagram.com/">Instagram</a></li><li><a href="https://www.tiktok.com/">TikTok</a></li></ul></div>
     </div>
@@ -173,7 +205,7 @@ function drawCart(){
   $('#subtotal').textContent=money(sub);
   const left=Math.max(0,FREE_SHIP-sub);
   $('#ship').innerHTML=(left>0?`You're ${money(left)} away from free shipping.`:`You've unlocked free shipping.`)+`<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
-  $('#items').innerHTML=ids.length?ids.map(id=>{const p=PRODUCTS[id];const bg=p.set?PRODUCTS[p.set[0]].bg:p.bg;
+  $('#items').innerHTML=ids.length?ids.map(id=>{const p=PRODUCTS[id];const bg=p.imgs?`url(${p.imgs[0]}) center/cover`:p.set?PRODUCTS[p.set[0]].bg:p.bg;
     return `<div class="item"><a href="product.html#${id}" class="sw" style="background:${bg}"></a><div><h5><a href="product.html#${id}">${titleOf(id)}</a></h5><small>${money(p.price)}</small>
     <div class="qty"><button data-q="-1" data-id="${id}" aria-label="Decrease">−</button>${cart[id]}<button data-q="1" data-id="${id}" aria-label="Increase">+</button></div></div>
     <strong style="font-weight:400">${money(p.price*cart[id])}</strong></div>`}).join(''):'<div class="empty">Your cart is empty — for now.</div>';
@@ -190,7 +222,7 @@ function pageHome(){
   [['h1','a','alleyway'],['h2','b','brekkie'],['h3','c','iced-coffee']].forEach(([e,c,id])=>{const el=document.getElementById(e);el.outerHTML=cover(id).replace('class="nb','class="nb '+c)});
   $('#notes').innerHTML=[...NOTES,...NOTES].map(([q,s])=>`<div class="note"><q>${q}</q><span>— ${s}</span></div>`).join('');
   $('#chapters').innerHTML=Object.entries(COLLECTIONS).map(([k,c],i)=>{
-    const items=Object.keys(PRODUCTS).filter(id=>PRODUCTS[id].col===k);
+    const items=Object.keys(PRODUCTS).filter(id=>PRODUCTS[id].col===k).sort((a,b)=>!!PRODUCTS[b].imgs-!!PRODUCTS[a].imgs).slice(0,3);
     return `<section class="chapter"><div class="ch-text"><div class="eyebrow">${c.chapter}</div><div class="native">${c.sub}</div><h2>${c.name}</h2><p>${c.blurb}</p>
       <a href="collections.html#${k}" class="btn">Explore Collection</a></div>
       <div class="ch-visual" style="background:${c.bg}"><span class="ch-num">${['i.','ii.','iii.'][i]}</span>${items.map(cover).join('')}</div></section>`}).join('');
@@ -204,7 +236,7 @@ function postCard(k,j){
 
 /* ---------- page: shop ---------- */
 function pageShop(){
-  const valid=['all','saigon','adelaide','studio','sets'];
+  const valid=['all','saigon','adelaide','studio','crabit','sets'];
   const draw=()=>{
     let f=location.hash.slice(1); if(!valid.includes(f)) f='all';
     document.querySelectorAll('#filters a').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
@@ -226,7 +258,9 @@ function pageProduct(){
     const p=PRODUCTS[id], col=COLLECTIONS[p.col];
     document.title=titleOf(id)+' — Paper Land';
     const views=[cover(id)];
-    if(!p.set){views.push(`<div class="spread"><div><em>${p.spiral?'notes':p.name}</em></div><div></div></div>`);
+    if(p.imgs){views.length=0;views.push(...p.imgs.map(src=>img(src,titleOf(id))));}
+    else if(p.brand){views.push(`<div class="spread"><div><em>${p.short.toLowerCase()}</em></div><div></div></div>`);}
+    else if(!p.set){views.push(`<div class="spread"><div><em>${p.spiral?'notes':p.name}</em></div><div></div></div>`);
       views.push(p.spiral?cover(id):`<div class="nb back ${p.dark?'dark':''}" style="background:${p.bg}"><div class="label"><b>Paper Land</b>${p.fmt.split(' · ')[0]}<br>${p.ruling}</div></div>`);}
     else views.push(...p.set.map(cover));
     let qty=1;
@@ -237,13 +271,16 @@ function pageProduct(){
         <div class="eyebrow">${col?`<a href="collections.html#${p.col}">${col.name}</a>`:'<a href="shop.html#sets">Gift Sets</a>'}</div>
         <h1>${titleOf(id)}</h1><div class="price">${money(p.price)} AUD</div>
         ${p.def?`<div class="defn"><small>${p.name} · ${p.ph} · noun</small>${p.def}</div>`:''}
+        ${p.brand?`<div class="brandline">Made by <b>${p.brand}</b> in Vietnam · stocked by Paper Land</div>`:''}
         <p class="desc">${p.desc}</p>
         <div class="buy"><div class="stepper"><button id="minus" aria-label="Decrease">−</button><span id="qty">1</span><button id="plus" aria-label="Increase">+</button></div>
           <button class="btn solid" id="buy">Add to Cart</button></div>
         <div class="note-ship">Free shipping Australia-wide on orders over $${FREE_SHIP}. Dispatched from Adelaide in 1–2 business days.</div>
         <details open><summary>Details</summary><div class="body"><ul>
-          <li>Format: ${p.fmt}</li><li>Pages: ${p.set?'three notebooks, as listed':p.spiral?'80 pages, 100gsm':'160 numbered pages, 120gsm ivory paper'}</li>
-          <li>Ruling: ${p.set?'mixed':p.ruling}</li>${p.spiral||p.set?'':'<li>Lay-flat binding, elastic closure, ribbon marker and back pocket</li>'}</ul></div></details>
+          <li>Format: ${p.fmt}</li>
+          ${p.brand?(p.paper?`<li>Paper: ${p.paper}</li>`:''):`<li>Pages: ${p.set?'three notebooks, as listed':p.spiral?'80 pages, 100gsm':'160 numbered pages, 120gsm ivory paper'}</li>`}
+          <li>Ruling: ${p.set?'mixed':p.ruling}</li>${p.spiral||p.set||p.brand?'':'<li>Lay-flat binding, elastic closure, ribbon marker and back pocket</li>'}
+          ${p.brand?`<li>Brand: ${p.brand} (Vietnam)</li>`:''}</ul></div></details>
         <details><summary>Shipping &amp; Returns</summary><div class="body">Standard shipping $9.95 Australia-wide, free over $${FREE_SHIP}. Unused items can be returned within 30 days. <a href="help.html#shipping" style="border-bottom:1px solid">Full policy</a>.</div></details>
         <details><summary>Paper &amp; Pens</summary><div class="body">Tested with gel, ballpoint, pencil and fine fountain pens. Very wet markers may show through — try them on the last page first.</div></details>
       </div>`;
@@ -304,7 +341,7 @@ const WELCOME_KEY='pl-welcome-seen', WELCOME_CODE='HELLO10', WELCOME_DELAY=4000;
 function seenWelcome(){try{return localStorage.getItem(WELCOME_KEY)||sessionStorage.getItem(WELCOME_KEY)}catch(e){return false}}
 function markWelcome(){try{localStorage.setItem(WELCOME_KEY,'1')}catch(e){try{sessionStorage.setItem(WELCOME_KEY,'1')}catch(e2){}}}
 function welcome(){
-  if(seenWelcome()) return;
+  if(seenWelcome()||document.body.dataset.nopopup) return;
   const w=document.createElement('div');
   w.className='welcome'; w.setAttribute('role','dialog'); w.setAttribute('aria-modal','true'); w.setAttribute('aria-labelledby','wTitle');
   w.innerHTML=`<div class="w-box">
