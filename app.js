@@ -102,7 +102,7 @@ function chrome(){
     <a href="index.html" class="logo">Paper <span>Land</span></a>
     <ul class="menu" id="menu">
       ${a('shop.html','Shop','shop')}
-      <li class="dd" id="dd"><button aria-haspopup="true" aria-expanded="false" id="ddBtn" class="${page==='collections'?'active':''}">Collections ▾</button>
+      <li class="dd" id="dd"><button aria-haspopup="true" aria-expanded="false" id="ddBtn" class="${page==='collections'?'active':''}">Collections <svg class="chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
         <div class="dd-panel">
           ${Object.entries(COLLECTIONS).map(([k,c])=>`<a href="collections.html#${k}"><small>${c.chapter.split(' · ')[0]}</small>${c.name}</a>`).join('')}
           <a href="shop.html#sets"><small>Gift Sets</small>Starter Sets</a>
@@ -299,6 +299,40 @@ function pageHelp(){
   if(location.hash){const t=document.getElementById(location.hash.slice(1)); if(t){if(t.tagName==='DETAILS')t.open=true;setTimeout(()=>t.scrollIntoView(),50)}}
 }
 
+/* ---------- welcome popup (once per visitor, after a short delay) ---------- */
+const WELCOME_KEY='pl-welcome-seen', WELCOME_CODE='HELLO10', WELCOME_DELAY=4000;
+function seenWelcome(){try{return localStorage.getItem(WELCOME_KEY)||sessionStorage.getItem(WELCOME_KEY)}catch(e){return false}}
+function markWelcome(){try{localStorage.setItem(WELCOME_KEY,'1')}catch(e){try{sessionStorage.setItem(WELCOME_KEY,'1')}catch(e2){}}}
+function welcome(){
+  if(seenWelcome()) return;
+  const w=document.createElement('div');
+  w.className='welcome'; w.setAttribute('role','dialog'); w.setAttribute('aria-modal','true'); w.setAttribute('aria-labelledby','wTitle');
+  w.innerHTML=`<div class="w-box">
+    <button class="w-x" aria-label="Close">×</button>
+    <div class="w-img" aria-hidden="true">
+      <div class="spread w-spread"><div><em>today</em><span class="w-stick s1">plan~</span><span class="w-stick s2">☕</span></div><div><span class="w-stick s3">do not disturb</span><span class="w-photo"></span></div></div>
+      ${cover('iced-coffee').replace('class="nb','class="nb w-nb')}
+      <span class="w-badge">10% off</span>
+    </div>
+    <div class="w-copy">
+      <div class="eyebrow">Welcome to Paper Land</div>
+      <h2 id="wTitle">Your first notebook, <mark>10% off.</mark></h2>
+      <p>Join the Paper Club for a welcome code, new collection drops and one slow email a month.</p>
+      <form class="w-form"><input type="email" required placeholder="Your email address" aria-label="Email address"><button class="btn solid" type="submit">Get my 10% code</button></form>
+      <div class="w-done"><p>You're in! Use this code at checkout:</p><button class="w-code" title="Copy code">${WELCOME_CODE}<small>tap to copy</small></button></div>
+      <button class="w-no">No thanks, I'll pay full price</button>
+      <small class="w-fine">New customers only. One use per order.</small>
+    </div></div>`;
+  document.body.appendChild(w);
+  const close=()=>{w.classList.remove('show');markWelcome();setTimeout(()=>w.remove(),350)};
+  w.addEventListener('click',e=>{if(e.target===w)close()});
+  w.querySelector('.w-x').onclick=close; w.querySelector('.w-no').onclick=close;
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.contains(w))close()});
+  w.querySelector('.w-form').addEventListener('submit',e=>{e.preventDefault();markWelcome();w.classList.add('joined')});
+  w.querySelector('.w-code').onclick=async e=>{const b=e.currentTarget;try{await navigator.clipboard.writeText(WELCOME_CODE);b.querySelector('small').textContent='copied ✓'}catch(err){b.querySelector('small').textContent='select & copy: '+WELCOME_CODE}};
+  setTimeout(()=>{w.classList.add('show');w.querySelector('input').focus({preventScroll:true})},WELCOME_DELAY);
+}
+
 /* ---------- boot ---------- */
-chrome(); drawCart();
+chrome(); drawCart(); welcome();
 ({home:pageHome,shop:pageShop,product:pageProduct,collections:pageCollections,about:pageAbout,journal:pageJournal,article:pageArticle,help:pageHelp}[document.body.dataset.page]||(()=>{}))();

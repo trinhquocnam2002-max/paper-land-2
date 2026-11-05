@@ -332,3 +332,115 @@ details ul{padding-left:18px}
 
 .thumbs .set{display:flex;gap:4%;width:86%;align-items:center}.thumbs .set .nb{width:31%}
 .jlist .post.feature .txt h3{margin-top:12px}
+
+/* ======================================================
+   TYPE REFRESH — Montserrat everywhere, fresh & young
+   ====================================================== */
+:root{--serif:'Montserrat',system-ui,sans-serif;--sans:'Montserrat',system-ui,sans-serif;--hl:#F6D9C9}
+body{font-weight:400;font-size:15px;letter-spacing:-.005em}
+.logo{font-family:var(--sans);font-weight:700;font-size:23px;letter-spacing:-.04em}
+.logo span{font-style:normal;font-weight:300}
+.menu a,.menu button,.cart-btn,.burger{font-size:13px;letter-spacing:.02em;text-transform:none;font-weight:500}
+.chev{width:11px;height:8px;margin-left:5px;vertical-align:middle;transition:transform .2s}
+.dd.open .chev{transform:rotate(180deg)}
+.dd-panel a{font-weight:500}
+.dd-panel small{letter-spacing:.08em}
+.eyebrow{letter-spacing:.14em;font-weight:600;font-size:11px}
+.announce{letter-spacing:.06em;font-weight:500}
+
+/* headlines: tight, bold, confident */
+.hero h1,.ch-text h2,.sec-head h2,.craft h2,.club h2,.page-head h1,.info h1,.col-intro h2,
+.story h2,.values h2,.process h2,.article h1,.help h2,.dhead h3{font-weight:600;letter-spacing:-.035em;line-height:1.06}
+.hero h1{font-size:clamp(40px,5.4vw,74px)}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--hl) 62%);padding:0 .06em}
+.ch-text h2,.col-intro h2{font-size:clamp(32px,3.8vw,52px)}
+.sec-head h2,.craft h2,.club h2,.story h2,.values h2,.process h2{font-size:clamp(28px,3.3vw,44px)}
+.page-head h1,.article h1{font-size:clamp(36px,4.8vw,62px)}
+.info h1{font-size:clamp(32px,3.6vw,46px)}
+.help h2{font-size:28px}
+
+/* soft italics become light, friendly accents */
+.native,.ch-text .native,.col-intro .native{font-style:normal;font-weight:500;font-size:16px;color:var(--terra)}
+.ch-num,.vgrid .n{font-style:normal;font-weight:600;font-size:13px;letter-spacing:.08em}
+.note q{font-style:normal;font-weight:500;font-size:17px;letter-spacing:-.01em}
+.info .defn{font-style:normal;font-weight:500;font-size:18px}
+.article .lede{font-weight:500;font-size:20px;letter-spacing:-.01em}
+.article .body h2{font-weight:600;font-size:24px;letter-spacing:-.02em}
+.article .body p,.article .body ol,.article .body ul{font-size:16px}
+.pull q{font-style:normal;font-weight:600;letter-spacing:-.03em;font-size:clamp(26px,3vw,40px)}
+.glyph,.post .img .glyph,.article .hero-img .glyph{font-style:normal!important;font-weight:700;letter-spacing:-.05em;color:rgba(31,29,27,.42)}
+.empty,.club .ok,.cform .ok{font-style:normal;font-weight:500;font-size:17px}
+
+/* cards & small headings */
+.card h3{font-weight:600;font-size:17px;letter-spacing:-.02em}
+.post h3,.vgrid h3,.stockists h4{font-weight:600;font-size:20px;letter-spacing:-.02em}
+.jlist .post.feature h3{font-weight:600;letter-spacing:-.03em;font-size:clamp(26px,3vw,38px)}
+.item h5{font-weight:600;font-size:15px}
+.spec b,.steps b{font-weight:500;letter-spacing:-.04em}
+.card .meta,.post p{font-size:14px}
+
+/* notebook covers in Montserrat */
+.nb .w{font-weight:600;font-size:15cqw;letter-spacing:-.045em;line-height:1}
+.nb .ph{font-style:normal;font-size:4.6cqw;font-weight:500}
+.nb .def{font-size:4.8cqw;font-weight:500}
+.nb.gingham .w{font-size:10cqw}
+.spread em{font-style:normal;font-weight:600;letter-spacing:-.03em}
+
+/* rounder, younger controls */
+.btn{border-radius:999px;letter-spacing:.06em;font-weight:600;font-size:12px}
+.filters a,.filters button{border-radius:999px;letter-spacing:.04em;text-transform:none;font-size:13px;font-weight:500;padding:8px 18px}
+.tag{border-radius:999px;letter-spacing:.08em;font-weight:600}
+.link,.add{letter-spacing:.06em;font-weight:600}
+.toolbar select,.cform input,.cform select,.cform textarea{border-radius:10px}
+.stepper{border-radius:999px;overflow:hidden}
+.cform{border-radius:18px}
+.card .stage,.gallery .main,.thumbs button,.post .img,.story .visual,.stockists div,.article .hero-img{border-radius:14px;overflow:hidden}
+.ch-visual{border-radius:0}
+
+/* ======================================================
+   WELCOME POPUP
+   ====================================================== */
+.welcome{position:fixed;inset:0;z-index:90;background:rgba(31,29,27,.45);display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .35s}
+.welcome.show{opacity:1;pointer-events:auto}
+.w-box{position:relative;background:var(--paper);border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;width:min(860px,100%);
+  transform:translateY(18px) scale(.97);transition:transform .4s cubic-bezier(.2,.8,.2,1);box-shadow:0 40px 80px -30px rgba(0,0,0,.45)}
+.welcome.show .w-box{transform:none}
+.w-x{position:absolute;top:12px;right:14px;z-index:5;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.85);font-size:22px;line-height:1;color:var(--ink)}
+.w-img{position:relative;background:#E7E3DD;min-height:440px;overflow:hidden}
+.w-spread{position:absolute;width:104%;left:-2%;top:7%;transform:rotate(-4deg)}
+.w-spread div{background-size:12px 12px}
+.w-spread em{font-size:22px;top:10%}
+.w-stick{position:absolute;font-size:10px;font-weight:600;padding:5px 9px;border-radius:999px;background:#2B2927;color:#F1ECE4;white-space:nowrap}
+.w-stick.s1{left:22%;top:34%;background:#fff;color:#2B2927;font-size:15px;border-radius:4px;transform:rotate(-6deg);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.w-stick.s2{left:52%;top:20%;background:none;font-size:22px;padding:0}
+.w-stick.s3{left:10%;top:66%}
+.w-photo{position:absolute;right:16%;top:16%;width:34%;aspect-ratio:3/4;background:linear-gradient(160deg,#55504a,#2b2927 60%,#7c6f62);transform:rotate(5deg);box-shadow:0 3px 8px rgba(0,0,0,.25);border:5px solid #fff}
+.w-nb{position:absolute!important;width:50%;left:30%;top:33%;transform:rotate(-13deg)}
+.w-badge{position:absolute;left:18px;bottom:18px;background:var(--hl);color:var(--ink);font-weight:700;font-size:13px;padding:8px 14px;border-radius:999px;letter-spacing:-.01em}
+.w-copy{padding:56px 44px 40px;display:flex;flex-direction:column;justify-content:center}
+.w-copy h2{font-weight:600;font-size:clamp(28px,3.2vw,38px);letter-spacing:-.04em;line-height:1.06;margin:12px 0 14px}
+.w-copy mark{background:linear-gradient(transparent 60%,var(--hl) 60%);color:inherit}
+.w-copy p{color:var(--ink-soft);margin-bottom:22px;font-size:15px}
+.w-form{display:flex;flex-direction:column;gap:10px}
+.w-form input{font:inherit;font-size:15px;padding:13px 18px;border:1px solid var(--line);border-radius:999px;background:#fff;outline:none;color:var(--ink)}
+.w-form input:focus{border-color:var(--ink)}
+.w-form .btn{width:100%;padding:14px}
+.w-done{display:none}
+.welcome.joined .w-form{display:none}
+.welcome.joined .w-done{display:block}
+.w-code{display:flex;flex-direction:column;align-items:center;width:100%;border:1.5px dashed var(--ink);border-radius:14px;background:#fff;padding:14px;
+  font-family:var(--sans);font-size:28px;font-weight:700;letter-spacing:.08em;color:var(--ink)}
+.w-code small{font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--ink-soft);margin-top:2px}
+.w-no{background:none;border:0;margin-top:16px;font-size:13px;color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px}
+.welcome.joined .w-no{display:none}
+.w-fine{margin-top:12px;font-size:11px;color:var(--ink-soft)}
+@media (max-width:700px){
+  .w-box{grid-template-columns:1fr;max-height:92vh;overflow:auto}
+  .w-img{min-height:210px}
+  .w-spread{top:-10%}
+  .w-nb{width:36%;left:33%;top:10%}
+  .w-stick.s3,.w-stick.s1{display:none}
+  .w-copy{padding:26px 24px 26px}
+}
+@media (prefers-reduced-motion:reduce){.welcome,.w-box{transition:none}}
