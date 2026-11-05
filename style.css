@@ -468,3 +468,11 @@ body{font-weight:400;font-size:15px;letter-spacing:-.005em}
 .hero .eyebrow{color:#C77B57}
 .hero-stack .shelf{display:none}
 .hero-stack{height:470px}
+
+/* ===== game links ===== */
+.menu a.play-link{background:#2B2927;color:#F7F3EE;border-radius:999px;padding:6px 14px;font-family:'Press Start 2P','Montserrat',monospace;font-size:10px;letter-spacing:0}
+.menu a.play-link:hover{opacity:.85}
+.play-cta{display:inline-flex;align-items:center;gap:10px;margin-top:28px;font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1.5px dashed #2B2927;border-radius:999px;padding:9px 16px 9px 9px}
+.play-cta span{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#7E9172;color:#fff;align-items:center;justify-content:center;font-size:11px}
+.play-cta:hover{background:#2B2927;color:#fff}
+@media (max-width:820px){.menu a.play-link{display:inline-block}}

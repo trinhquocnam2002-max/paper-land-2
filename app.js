@@ -127,6 +127,7 @@ function card(id){
 /* ---------- header / footer / drawer ---------- */
 function chrome(){
   const page=document.body.dataset.page;
+  if(document.body.dataset.bare){ chromeBare(); return; }
   const a=(href,label,key)=>`<li><a href="${href}" class="${page===key?'active':''}">${label}</a></li>`;
   $('#site-header').outerHTML = `
   <div class="announce">Free shipping Australia-wide on orders over $${FREE_SHIP} · Designed in Adelaide</div>
@@ -142,6 +143,7 @@ function chrome(){
       ${a('about.html','About','about')}
       ${a('journal.html','Journal','journal')}
       ${a('help.html','Help','help')}
+      <li><a href="play.html" class="play-link">▶ Play</a></li>
     </ul>
     <div style="display:flex;gap:22px;align-items:center">
       <button class="burger" id="burger">Menu</button>
@@ -190,6 +192,22 @@ function chrome(){
   $('#checkout').onclick=()=>{$('#msg').style.display='block'};
 }
 
+const DRAWER=`<div class="scrim" id="scrim"></div>
+  <aside class="drawer" aria-label="Your cart">
+    <div class="dhead"><h3>Your Cart</h3><button id="cartClose">Close</button></div>
+    <div class="ship" id="ship"></div><div class="items" id="items"></div>
+    <div class="dfoot"><div class="tot"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+      <small>Shipping and GST calculated at checkout. Prices in AUD.</small>
+      <button class="btn solid" id="checkout">Continue to Checkout</button>
+      <div class="msg" id="msg">Online checkout opens with our first release — your cart is saved in this browser.</div></div>
+  </aside>`;
+function chromeBare(){
+  document.body.insertAdjacentHTML('beforeend',DRAWER);
+  $('#cartClose').onclick=closeCart; $('#scrim').onclick=closeCart;
+  $('#checkout').onclick=()=>{$('#msg').style.display='block'};
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCart()});
+}
+
 /* ---------- cart (shared across pages via localStorage when available) ---------- */
 let cart={};
 try{cart=JSON.parse(localStorage.getItem('pl-cart')||'{}')||{}}catch(e){cart={}}
@@ -201,7 +219,7 @@ function drawCart(){
   const ids=Object.keys(cart).filter(id=>PRODUCTS[id]);
   const count=ids.reduce((s,id)=>s+cart[id],0);
   const sub=ids.reduce((s,id)=>s+cart[id]*PRODUCTS[id].price,0);
-  $('#cartCount').textContent=count;
+  document.querySelectorAll('#cartCount,.cartCount').forEach(el=>el.textContent=count);
   $('#subtotal').textContent=money(sub);
   const left=Math.max(0,FREE_SHIP-sub);
   $('#ship').innerHTML=(left>0?`You're ${money(left)} away from free shipping.`:`You've unlocked free shipping.`)+`<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
