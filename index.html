@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=202611060250">
+<link rel="stylesheet" href="style.css?v=202611060256">
 <style>
 :root{--px:'Press Start 2P',monospace;--pxb:'Pixelify Sans','Montserrat',sans-serif;
   --sky1:#9fd3e8;--sky2:#f7e6c4;--ink:#2b2340;--cream:#fff7e6;--wood:#8a5a3b;--wood2:#6b4329;--grass:#7ab55c;--sage:#7E9172;--peach:#F6D9C9;--terra:#d9825b}
@@ -41,7 +41,7 @@ body.game{background:#2b2340;color:var(--ink);font-family:var(--pxb);overflow:hi
 @keyframes blink{50%{opacity:.25}}
 .t-foot{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:var(--px);font-size:9px;color:var(--cream);z-index:2}
 .t-foot a{text-decoration:underline}
-.skip{position:absolute;top:16px;right:16px;z-index:3}
+.skip{display:inline-block;margin-top:26px;font-size:9px;text-decoration:none}
 
 /* ---------- guide select ---------- */
 #select{background:#2b2340 radial-gradient(circle,#3b3158 2px,transparent 2.5px) 0 0/24px 24px;color:var(--cream);overflow:auto}
@@ -165,13 +165,13 @@ body.game{background:#2b2340;color:var(--ink);font-family:var(--pxb);overflow:hi
 
 <!-- TITLE -->
 <section class="screen on" id="title" aria-label="Title screen">
-  <a href="shop.html" class="pxbtn skip" style="font-size:9px">✕ Skip to shop</a>
   <div class="t-island"></div>
   <div class="t-wrap">
     <div class="t-logo">PAPER<br>LAND</div>
     <div class="t-sub">a cosy stationery adventure</div>
     <div class="loader" id="loader"><div class="lbar"><i id="lfill"></i></div><div class="lmsg" id="lmsg">Sharpening pencils…</div></div>
     <button class="pxbtn start" id="startBtn">▶ Press Start</button>
+    <a href="shop.html" class="pxbtn skip">Skip to shop →</a>
   </div>
   <div class="t-foot">Designed in Adelaide · Inspired by Saigon · <a href="home.html">visit the regular website</a></div>
 </section>
@@ -229,7 +229,7 @@ body.game{background:#2b2340;color:var(--ink);font-family:var(--pxb);overflow:hi
 
 <div class="toast" id="toast"></div>
 
-<script src="app.js?v=202611060250"></script>
-<script src="play.js?v=202611060250"></script>
+<script src="app.js?v=202611060256"></script>
+<script src="play.js?v=202611060256"></script>
 </body>
 </html>
