@@ -132,7 +132,7 @@ function chrome(){
   $('#site-header').outerHTML = `
   <div class="announce">Free shipping Australia-wide on orders over $${FREE_SHIP} · Designed in Adelaide</div>
   <header><div class="wrap nav">
-    <a href="index.html" class="logo">Paper <span>Land</span></a>
+    <a href="home.html" class="logo">Paper <span>Land</span></a>
     <ul class="menu" id="menu">
       ${a('shop.html','Shop','shop')}
       <li class="dd" id="dd"><button aria-haspopup="true" aria-expanded="false" id="ddBtn" class="${page==='collections'?'active':''}">Collections <svg class="chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
@@ -143,7 +143,7 @@ function chrome(){
       ${a('about.html','About','about')}
       ${a('journal.html','Journal','journal')}
       ${a('help.html','Help','help')}
-      <li><a href="play.html" class="play-link">▶ Play</a></li>
+      <li><a href="index.html" class="play-link">▶ Play</a></li>
     </ul>
     <div style="display:flex;gap:22px;align-items:center">
       <button class="burger" id="burger">Menu</button>
@@ -160,7 +160,7 @@ function chrome(){
   </section>
   <footer><div class="wrap">
     <div class="fgrid">
-      <div class="fbrand"><a href="index.html" class="logo">Paper <span>Land</span></a>
+      <div class="fbrand"><a href="home.html" class="logo">Paper <span>Land</span></a>
         <p>Notebooks for slow mornings — designed in Adelaide, inspired by Saigon.</p>
         <p style="margin-top:14px">hello@paperland.com.au</p></div>
       <div><h4>Shop</h4><ul><li><a href="shop.html">Shop All</a></li><li><a href="collections.html#saigon">Saigon Mornings</a></li><li><a href="collections.html#adelaide">Adelaide Arvo</a></li><li><a href="collections.html#studio">Someday Studio</a></li><li><a href="collections.html#crabit">Crabit Coffee Series</a></li><li><a href="shop.html#sets">Gift Sets</a></li></ul></div>
@@ -306,7 +306,7 @@ function pageProduct(){
     $('#minus').onclick=()=>{qty=Math.max(1,qty-1);$('#qty').textContent=qty};
     $('#plus').onclick=()=>{qty++;$('#qty').textContent=qty};
     $('#buy').onclick=()=>{addToCart(id,qty);openCart()};
-    $('#crumb').innerHTML=`<a href="index.html">Home</a> / <a href="shop.html">Shop</a> / ${col?`<a href="collections.html#${p.col}">${col.name}</a> / `:''}${titleOf(id)}`;
+    $('#crumb').innerHTML=`<a href="home.html">Home</a> / <a href="shop.html">Shop</a> / ${col?`<a href="collections.html#${p.col}">${col.name}</a> / `:''}${titleOf(id)}`;
     const rel=Object.keys(PRODUCTS).filter(x=>x!==id&&(PRODUCTS[x].col===p.col)).concat(Object.keys(PRODUCTS).filter(x=>x!==id&&PRODUCTS[x].col!==p.col)).slice(0,4);
     $('#related').innerHTML=rel.map(card).join('');
     window.scrollTo(0,0);
@@ -338,7 +338,7 @@ function pageArticle(){
     const keys=Object.keys(JOURNAL); let k=location.hash.slice(1); if(!JOURNAL[k]) k=keys[0];
     const j=JOURNAL[k]; document.title=j.title+' — Paper Land';
     const next=keys[(keys.indexOf(k)+1)%keys.length];
-    $('#article').innerHTML=`<div class="crumbs"><a href="index.html">Home</a> / <a href="journal.html">Journal</a></div>
+    $('#article').innerHTML=`<div class="crumbs"><a href="home.html">Home</a> / <a href="journal.html">Journal</a></div>
       <div style="margin-top:30px"><time class="cat">${j.date}</time> · <span class="cat">${j.cat}</span></div>
       <h1>${j.title}</h1><div class="hero-img" style="background:${j.bg}"><div class="glyph">${j.glyph}</div></div>
       <p class="lede">${j.lede}</p><div class="body">${j.body}</div>

@@ -6,7 +6,8 @@ Website for Paper Land, a design-led stationery brand: notebooks, planners and p
 
 | File | Page |
 |---|---|
-| `index.html` | Home |
+| `index.html` | Game entrance: pixel-art "Enter Paper Land" (first page visitors see) |
+| `home.html` | Regular home page |
 | `shop.html` | Shop all products, with filters and sorting |
 | `product.html#<id>` | Product detail, e.g. `product.html#arvo` |
 | `collections.html` | Saigon Mornings, Adelaide Arvo, Someday Studio |
