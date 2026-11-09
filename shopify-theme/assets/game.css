@@ -148,4 +148,27 @@ body.game{background:#2b2340;color:var(--ink);font-family:var(--pxb);overflow:hi
 }
 .show-sm{display:none}
 @media (max-width:760px){.show-sm{display:inline}}
+/* ---------- mobile: vertical scroll map ---------- */
+#world.vm .stage,#world.vm .hint{display:none}
+#world.vm{background:#5aaedb}
+#vmap{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-top:104px;padding-bottom:90px;overscroll-behavior:contain}
+.vinner{position:relative}
+#vcv{width:100%;display:block;image-rendering:pixelated}
+.vstart{position:absolute;left:50%;top:2.4%;transform:translateX(-50%);font-family:var(--px);font-size:8px;color:var(--ink);background:var(--cream);padding:7px 9px;box-shadow:0 0 0 2px var(--ink);white-space:nowrap;animation:blink 1.4s steps(2) infinite}
+.vspot{position:absolute;transform:translate(-50%,-100%);background:none;border:0;padding:0;cursor:pointer;z-index:2}
+.vspot>span{display:inline-block;white-space:nowrap;font-family:var(--px);font-size:8px;background:var(--cream);color:var(--ink);padding:6px 7px;box-shadow:0 0 0 2px var(--ink),3px 3px 0 2px #00000033}
+.vspot .key{font-weight:400;opacity:.55;margin-right:5px}
+.vspot.done>span::after{content:" ✓";color:#3d8a33}
+#vchip{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translate(-50%,180%);z-index:26;display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:#ffd25e;color:var(--ink);border:0;font-family:var(--pxb);font-size:16px;padding:10px 16px;box-shadow:0 0 0 3px var(--ink),5px 5px 0 3px #00000040;transition:transform .25s steps(4);max-width:92vw}
+#vchip b{font-family:var(--px);font-size:10px;line-height:1.4}
+#vchip span{font-size:14px}
+#vchip.on{transform:translate(-50%,0)}
+#vchip.hide{transform:translate(-50%,180%)}
+#world.vm .hud{background:linear-gradient(#5aaedb 70%,#5aaedb00);padding-bottom:16px;z-index:22}
+#world.vm .items-row{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory;padding:4px 3px 8px;margin-left:-3px;margin-right:-3px}
+#world.vm .itm{flex:0 0 58%;scroll-snap-align:start}
+#world.vm .items-row .itm:nth-child(3){display:flex}
+#world.vm .dlg{bottom:10px}
+#world.vm .dlg .pxbox{max-height:70vh}
 @media (prefers-reduced-motion:reduce){.cloud,.guide canvas,.start{animation:none}}
