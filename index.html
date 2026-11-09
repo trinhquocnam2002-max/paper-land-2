@@ -11,6 +11,12 @@
 <!-- End Google Tag Manager -->
 
 <meta charset="utf-8">
+<script>
+/* phones skip the game and land in the shop (game stays available via ?play=1) */
+(function(){try{var w=Math.min(screen.width||9999,window.innerWidth||9999),m=w<=760||window.matchMedia('(max-width: 760px)').matches,p=location.search.indexOf('play=1')>-1;
+if(p)sessionStorage.setItem('pl-play','1');if(m&&!p&&!sessionStorage.getItem('pl-play'))location.replace('shop.html');}catch(e){}})();
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Enter Paper Land — a cosy stationery adventure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">

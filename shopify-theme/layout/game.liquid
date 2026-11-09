@@ -2,6 +2,12 @@
 <html lang="{{ request.locale.iso_code }}">
 <head>
   {% render 'pl-head' %}
+  <script>
+    /* phones skip the game and land in the shop (game stays available via ?play=1) */
+    (function(){try{var w=Math.min(screen.width||9999,window.innerWidth||9999),m=w<=760,p=location.search.indexOf('play=1')>-1;
+    if(p)sessionStorage.setItem('pl-play','1');
+    if(m&&!p&&!sessionStorage.getItem('pl-play')){var pv=location.search.match(/preview_theme_id=\d+/);location.replace({{ routes.all_products_collection_url | json }}+(pv?'?'+pv[0]:''));}}catch(e){}})();
+  </script>
   {{ 'game.css' | asset_url | stylesheet_tag }}
   {{ content_for_header }}
 </head>

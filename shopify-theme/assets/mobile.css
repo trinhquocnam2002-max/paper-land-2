@@ -1,0 +1,136 @@
+/* =========================================================
+   Paper Land — mobile shop UI (≤760px)
+   Layout ideas from front-co.com, Paper Land colours & type.
+   ========================================================= */
+.mnav,.m-only,.mtitle,.mtools,.mdrawer,.msearch,.mbar,.mscrim,.qadd,.qsoon{display:none}
+
+@media (max-width:760px){
+  body{-webkit-tap-highlight-color:transparent}
+  .m-only{display:block}
+  .announce{font-size:10px;padding:7px 10px;letter-spacing:.08em}
+
+  /* ---------- header: ☰ 🔍  LOGO  👜 ---------- */
+  header .nav{display:none}
+  header{border-bottom:1px solid var(--line)}
+  .mnav{display:grid;grid-template-columns:44px 44px 1fr 44px 44px;align-items:center;height:58px;padding:0 6px}
+  .mnav button,.mnav a.icon{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:none;border:0;color:var(--ink);position:relative}
+  .mnav svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6}
+  .mnav .logo{justify-self:center;font-size:21px;white-space:nowrap}
+  .mnav .badge{position:absolute;top:6px;right:4px;min-width:17px;height:17px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 4px}
+  .mnav .badge:empty,.mnav .badge.zero{display:none}
+
+  /* ---------- drawers (menu + filter) ---------- */
+  .mscrim{display:block;position:fixed;inset:0;background:rgba(31,29,27,.38);opacity:0;pointer-events:none;transition:opacity .25s;z-index:65}
+  .mscrim.on{opacity:1;pointer-events:auto}
+  .mdrawer{display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;width:min(88vw,380px);background:var(--paper);z-index:75;transform:translateX(-102%);transition:transform .3s ease;box-shadow:12px 0 40px -20px rgba(0,0,0,.35)}
+  .mdrawer.on{transform:none}
+  .mdrawer .dh{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .mdrawer .dh b{font-size:18px;font-weight:700;letter-spacing:-.02em;text-transform:uppercase}
+  .mdrawer .dh button{background:none;border:0;width:40px;height:40px;font-size:24px;line-height:1;color:var(--ink)}
+  .mdrawer .db{flex:1;overflow:auto;padding:6px 18px 24px}
+
+  /* menu */
+  .mmenu a.big,.mmenu summary{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:20px;font-weight:700;letter-spacing:-.03em;text-transform:uppercase;color:var(--ink)}
+  .mmenu details{border:0;padding:0}
+  .mmenu details[open] summary{border-bottom-color:transparent}
+  .mmenu summary::after{content:"+";font-weight:300;font-size:24px}
+  .mmenu details[open] summary::after{content:"−"}
+  .mmenu .sub a{display:block;padding:10px 0 10px 14px;font-size:15px;font-weight:500;color:var(--ink-soft)}
+  .mmenu .sub{padding-bottom:12px;border-bottom:1px solid var(--line)}
+  .mmenu .play{margin-top:22px;display:flex;gap:12px;align-items:center;justify-content:center;border:1.5px dashed var(--ink);border-radius:14px;padding:14px;font-weight:600;font-size:14px}
+  .mmenu .play span{font-family:'Press Start 2P',monospace;font-size:10px;background:#7E9172;color:#fff;border-radius:999px;padding:6px 9px}
+  .mmenu .foot{margin-top:22px;font-size:13px;color:var(--ink-soft);line-height:1.8}
+
+  /* filter */
+  .fgroup{border-bottom:1px solid var(--line);padding:16px 0}
+  .fgroup h4{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin-bottom:12px}
+  .fgroup h4 button{background:none;border:0;font-size:12px;text-decoration:underline;color:var(--ink-soft);letter-spacing:0;text-transform:none}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips label{position:relative}
+  .chips input{position:absolute;opacity:0;pointer-events:none}
+  .chips span{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:13px;font-weight:500;background:#fff}
+  .chips input:checked+span{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .checks label{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:15px}
+  .checks input{width:20px;height:20px;accent-color:var(--ink)}
+  .prange{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+  .prange input{width:100%;font:inherit;font-size:15px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+  .dfoot2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px;padding:14px 18px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--paper)}
+  .dfoot2 button{border-radius:999px;padding:14px;font:inherit;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  .dfoot2 .clear{background:none;border:1px solid var(--ink);color:var(--ink)}
+  .dfoot2 .see{background:var(--ink);border:1px solid var(--ink);color:var(--paper)}
+
+  /* ---------- search overlay ---------- */
+  .msearch{display:block;position:fixed;inset:0;background:var(--paper);z-index:80;transform:translateY(-100%);transition:transform .28s ease;overflow:auto}
+  .msearch.on{transform:none}
+  .msearch .sh{display:flex;gap:8px;align-items:center;padding:12px 12px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper)}
+  .msearch input{flex:1;font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:999px;background:#fff;outline:none}
+  .msearch .sh button{background:none;border:0;font-size:14px;font-weight:600;padding:10px}
+  .msearch .res{padding:6px 16px 40px}
+  .msearch .res a{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+  .msearch .thumb{width:56px;height:70px;border-radius:8px;overflow:hidden;background:var(--paper-2);display:flex;align-items:center;justify-content:center}
+  .msearch .thumb .nb{width:40px}.msearch .thumb .set{display:flex;width:52px;gap:2px}.msearch .thumb .set .nb{width:16px}
+  .msearch .thumb .pimg{width:100%;height:100%;object-fit:cover}
+  .msearch .res b{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1.3}
+  .msearch .res small{font-size:13px;color:var(--ink-soft)}
+  .msearch .hint2{padding:18px 16px;color:var(--ink-soft);font-size:14px}
+
+  /* ---------- shop: title row + tools ---------- */
+  body[data-page="shop"] .page-head{padding:6px 0 0}
+  body[data-page="shop"] .page-head>*:not(.mtitle){display:none}
+  .mtitle{display:grid;grid-template-columns:72px 1fr 72px;align-items:center;padding:18px 0 6px}
+  .mtitle a,.mtitle button{font-size:13px;font-weight:500;color:var(--ink);background:none;border:0;padding:6px 0;display:flex;align-items:center;gap:4px}
+  .mtitle .r{justify-content:flex-end;text-align:right}
+  .mtitle h1{margin:0;text-align:center;font-size:clamp(26px,8vw,34px);font-weight:700;letter-spacing:-.04em;line-height:1;text-transform:uppercase}
+  body[data-page="shop"] .toolbar{display:none}
+  .mtools{display:flex;justify-content:space-between;align-items:center;padding:14px 0 16px;position:sticky;top:58px;background:var(--paper);z-index:20}
+  .mtools .fbtn{display:flex;gap:8px;align-items:center;background:none;border:0;font:inherit;font-size:14px;font-weight:500;color:var(--ink);padding:6px 0}
+  .mtools .fbtn svg,.mtools .dens svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6}
+  .mtools .fbtn i{font-style:normal;background:var(--ink);color:var(--paper);border-radius:999px;font-size:10px;padding:2px 7px}
+  .mtools .count2{font-size:12px;color:var(--ink-soft)}
+  .mtools .dens{display:flex;gap:4px}
+  .mtools .dens button{width:34px;height:34px;border-radius:8px;border:0;background:none;color:var(--ink-soft);display:flex;align-items:center;justify-content:center}
+  .mtools .dens button.on{background:#ece5da;color:var(--ink)}
+  .wrap{padding-left:16px;padding-right:16px}
+
+  /* ---------- product grid & cards ---------- */
+  #grid,#related,#featured,.grid,.grid.three{gap:22px 10px!important}
+  #grid.cols-1{grid-template-columns:1fr!important}
+  #grid.cols-2{grid-template-columns:1fr 1fr!important}
+  #grid.cols-3{grid-template-columns:1fr 1fr 1fr!important;gap:14px 6px!important}
+  .card .stage{background:#fff;border:1px solid var(--ink);border-radius:14px;aspect-ratio:4/5;position:relative}
+  .card .stage .tag{top:8px;left:8px;font-size:9px;padding:4px 8px;background:var(--paper);border:1px solid var(--line)}
+  .card h3{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1.3;margin-top:10px}
+  .card .meta{display:none}
+  .card .row{display:block;margin-top:3px}
+  .card .row .price{font-size:13px;font-weight:400}
+  .card .row .price::after{content:""}
+  .card .row .add,.card .row .soon{display:none}
+  .qadd{position:absolute;right:8px;bottom:8px;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);border:0;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 4px 10px -4px rgba(0,0,0,.4)}
+  .qadd.done{background:#6E7D5F}
+  .qsoon{position:absolute;left:8px;bottom:8px;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px 8px;z-index:3}
+  #grid.cols-1 .card h3{font-size:16px}
+  #grid.cols-1 .card .row .price{font-size:15px}
+  #grid.cols-3 .card h3{font-size:10.5px}
+  #grid.cols-3 .card .row .price{font-size:11.5px}
+  #grid.cols-3 .qadd{width:28px;height:28px;font-size:16px;right:5px;bottom:5px}
+  #grid.cols-3 .qsoon,#grid.cols-3 .card .stage .tag{display:none}
+  .mempty{grid-column:1/-1;text-align:center;padding:40px 0;color:var(--ink-soft)}
+
+  /* ---------- product page: sticky add bar ---------- */
+  body[data-page="product"] .pdp{padding-bottom:30px}
+  body[data-page="product"] .info .buy{display:none}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;gap:10px;align-items:center;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(247,243,238,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+  .mbar .pp{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+  .mbar .pp b{font-size:12px;font-weight:700;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38vw}
+  .mbar .pp span{font-size:13px;color:var(--ink-soft)}
+  .mbar .stepper{border-radius:999px;margin-left:auto}
+  .mbar .stepper button{width:34px;height:42px}
+  .mbar .go{background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:0 18px;height:44px;font:inherit;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+  .mbar .go[disabled]{opacity:.45}
+  body[data-page="product"] footer{padding-bottom:90px}
+
+  /* smaller section paddings on phones */
+  .sec-head{padding-top:56px}
+  .club{padding:64px 20px}
+  .drawer{width:100%}
+}
