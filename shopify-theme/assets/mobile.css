@@ -2,7 +2,7 @@
    Paper Land — mobile shop UI (≤760px)
    Layout ideas from front-co.com, Paper Land colours & type.
    ========================================================= */
-.mnav,.m-only,.mtitle,.mtools,.mdrawer,.msearch,.mbar,.mscrim,.qadd,.qsoon,.mgame{display:none}
+.mnav,.m-only,.mtitle,.mtools,.mdrawer,.msearch,.mbar,.mscrim,.qadd,.qsoon{display:none}
 
 @media (max-width:760px){
   body{-webkit-tap-highlight-color:transparent}
@@ -133,12 +133,4 @@
   .sec-head{padding-top:56px}
   .club{padding:64px 20px}
   .drawer{width:100%}
-
-  /* game banner on shop */
-  .mgame{display:flex;align-items:center;gap:12px;margin:4px 16px 14px;padding:11px 14px;background:#5aaedb;color:#1d1a16;text-decoration:none;border:2px solid #1d1a16;box-shadow:3px 3px 0 #1d1a16}
-  .mgame .px{flex:none;font-family:'Press Start 2P',monospace;font-size:9px;background:#ffd25e;padding:7px 8px;border:2px solid #1d1a16}
-  .mgame b{display:block;font-size:14px;font-weight:700}
-  .mgame small{display:block;font-size:11.5px;line-height:1.35;margin-top:2px}
-  .mgame i{margin-left:auto;font-style:normal;font-size:22px;font-weight:700}
-  .mgame:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #1d1a16}
 }

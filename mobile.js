@@ -105,10 +105,6 @@ function shopSetup(){
   tools.innerHTML=`<button class="fbtn" type="button">${ICON.filter} Filter <i hidden></i></button><span class="count2"></span>
     <div class="dens" role="group" aria-label="Grid columns">${[1,2,3].map(n=>`<button type="button" data-c="${n}" aria-label="${n} column${n>1?'s':''}">${ICON['c'+n]}</button>`).join('')}</div>`;
   tb.after(tools);
-  // game banner (the scroll-map adventure)
-  const gb=document.createElement('a');gb.className='mgame';gb.href=R.game;
-  gb.innerHTML=`<span class="px">▶ PLAY</span><span><b>Explore Paper Land</b><small>A 1-minute scroll adventure through Saigon — find your notebook.</small></span><i>›</i>`;
-  tools.after(gb);
   // density
   const setCols=n=>{grid.classList.remove('cols-1','cols-2','cols-3');grid.classList.add('cols-'+n);qa('.dens button',tools).forEach(b=>b.classList.toggle('on',b.dataset.c==n));store.set('pl-cols',n)};
   setCols(store.get('pl-cols')||2);

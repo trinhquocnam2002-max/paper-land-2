@@ -376,115 +376,13 @@ $('#questPanel').onclick=e=>{if(e.target.id==='questPanel')closeQuests()};
 /* ---------- toast ---------- */
 let toastT;function toast(html){const t=$('#toast');t.innerHTML=html;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),3800)}
 
-/* ---------- MOBILE: vertical scroll map (Duolingo-style) ---------- */
-const MOBILE=Math.min(screen.width||9999,window.innerWidth||9999)<=760;
-const VW=180, STEP=178, TOP=150, VH=TOP+STEP*(LOCS.length-1)+150;
-// landmark art cropped from the island map: [x, y, w, h] in island pixels
-const CROP=[[124,44,74,50],[50,36,56,30],[212,38,70,24],[236,86,38,68],[26,128,60,33],[104,122,62,36]];
-const VST=LOCS.map((l,i)=>({l,i,cx:i%2?118:62,cy:TOP+i*STEP}));
-let vbase=null, vcv=null, vctx=null, vpath=[], vstopIdx=[], vp={k:0,flip:false,vis:-1}, vReady=false, vLast=0, vStepT=0, vFrame=0, vNear=-1;
-function vRand(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
-function buildVBase(){
-  vbase=document.createElement('canvas');vbase.width=VW;vbase.height=VH;const g=vbase.getContext('2d');
-  const P=(x,y,w,h,c)=>{g.fillStyle=c;g.fillRect(x|0,y|0,w|0,h|0)};
-  const rnd=vRand(7);
-  // grass with dither + sea edges
-  for(let y=0;y<VH;y++){const edgeL=10+Math.round(3*Math.sin(y*.05)+2*Math.sin(y*.13)),edgeR=VW-10-Math.round(3*Math.sin(y*.045+2)+2*Math.cos(y*.11));
-    for(let x=0;x<VW;x++){let c;const r=((x*73856093)^(y*19349663))>>>0;
-      if(y<34){c=(y<20)?((x+y)%5===0?'#7cc2e6':'#5aaedb'):(r%9<5?'#f0d79a':'#e8cb86')}
-      else if(x<edgeL-4||x>edgeR+4)c=(x+y)%4===0?'#7cc2e6':(r%11<2?'#4a9ccc':'#5aaedb');
-      else if(x<edgeL||x>edgeR)c=r%9<5?'#f0d79a':'#e8cb86';
-      else c=r%3===0?'#86c06a':(r%3===1?'#7ab55c':'#80ba62');
-      g.fillStyle=c;g.fillRect(x,y,1,1)}}
-  // winding path through every stop (Catmull-Rom)
-  const pts=[{x:90,y:22},...VST.map(s=>({x:s.cx,y:s.cy+8})),{x:90,y:VH-24}];
-  vpath=[];vstopIdx=[];
-  for(let i=0;i<pts.length-1;i++){const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
-    if(i>=1&&i<=VST.length)vstopIdx[i-1]=vpath.length;
-    const n=Math.ceil(Math.hypot(p2.x-p1.x,p2.y-p1.y));
-    for(let t=0;t<n;t++){const u=t/n,u2=u*u,u3=u2*u;
-      vpath.push({x:.5*((2*p1.x)+(-p0.x+p2.x)*u+(2*p0.x-5*p1.x+4*p2.x-p3.x)*u2+(-p0.x+3*p1.x-3*p2.x+p3.x)*u3),
-                  y:.5*((2*p1.y)+(-p0.y+p2.y)*u+(2*p0.y-5*p1.y+4*p2.y-p3.y)*u2+(-p0.y+3*p1.y-3*p2.y+p3.y)*u3)})}}
-  vpath.forEach((p,i)=>{for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++)if(dx*dx+dy*dy<=17){const r=((Math.round(p.x+dx)*31)^(Math.round(p.y+dy)*17))&7;P(p.x+dx,p.y+dy,1,1,r<5?'#e3c58c':'#d6b478')}});
-  vpath.forEach((p,i)=>{if(i%9===0)P(p.x-1,p.y-1,2,2,'#c9a56a')});
-  // trees + flowers away from the path and landmarks
-  const busy=(x,y)=>vpath.some(p=>Math.abs(p.x-x)<12&&Math.abs(p.y-y)<12)||VST.some(s=>Math.abs(s.cx-x)<44&&y>s.cy-74&&y<s.cy+14);
-  for(let i=0;i<420;i++){const x=16+rnd()*(VW-36),y=44+rnd()*(VH-70);
-    if(i%3===0){if(!busy(x,y))P(x,y,1,1,['#f6a7c1','#fff7e6','#ffd25e'][i%3===0?(i/3|0)%3:0])}
-    else if(!busy(x+3,y+5)&&!busy(x,y)){P(x+2,y+5,2,4,'#6b4329');P(x,y+1,6,5,INK);P(x+1,y,4,7,INK);P(x+1,y+1,4,5,'#3f7d3a');P(x+1,y+1,2,2,'#57a046')}}
-  // landmarks: sand pad + art cropped from the island map
-  VST.forEach((s,i)=>{const [cx0,cy0,w,h]=CROP[i];
-    for(let dy=-5;dy<=5;dy++)for(let dx=-w/2-6;dx<=w/2+6;dx++)if((dx*dx)/((w/2+6)*(w/2+6))+(dy*dy)/30<=1)P(s.cx+dx,s.cy+4+dy,1,1,((dx+dy)&3)?'#e8cb86':'#f0d79a');
-    g.drawImage(base,cx0,cy0,w,h,Math.round(s.cx-w/2),s.cy-h+4,w,h)});
-  // start + finish flags
-  P(86,8,1,14,INK);P(87,8,8,5,'#d9343a');P(90,10,1,1,'#ffd25e');
-  P(86,VH-36,1,14,INK);for(let i=0;i<4;i++)for(let j=0;j<3;j++)P(87+i*2,VH-36+j*2,2,2,(i+j)%2?'#fff':INK);
-}
-function setupVMap(){
-  if(vReady){vSync();return}vReady=true;
-  $('#world').classList.add('vm');
-  const wrap=document.createElement('div');wrap.id='vmap';
-  wrap.innerHTML=`<div class="vinner"><canvas id="vcv" width="${VW}" height="${VH}" aria-hidden="true"></canvas>
-    <div class="vstart">▼ Scroll to explore Paper Land</div></div>`;
-  $('#world').appendChild(wrap);
-  const chip=document.createElement('button');chip.id='vchip';chip.type='button';$('#world').appendChild(chip);
-  buildVBase();vcv=$('#vcv');vctx=vcv.getContext('2d');
-  const inner=wrap.querySelector('.vinner');
-  VST.forEach(s=>{const b=document.createElement('button');b.className='vspot';b.dataset.id=s.l.id;
-    b.style.left=(s.cx/VW*100)+'%';b.style.top=((s.cy-CROP[s.i][3]-2)/VH*100)+'%';
-    b.innerHTML=`<span><b class="key">${s.l.key}</b>${s.l.name}</span>`;b.onclick=()=>vOpen(s.i);inner.appendChild(b)});
-  vcv.addEventListener('click',e=>{const r=vcv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*VW,y=(e.clientY-r.top)/r.height*VH;
-    const s=VST.find(s=>Math.abs(s.cx-x)<CROP[s.i][2]/2+4&&y>s.cy-CROP[s.i][3]-4&&y<s.cy+10);if(s)vOpen(s.i)});
-  chip.onclick=()=>{if(vNear>=0)vOpen(vNear)};
-  wrap.addEventListener('scroll',()=>{if($('#dlg').classList.contains('on')&&!typing)closeDialog()},{passive:true});
-  requestAnimationFrame(vdraw);
-}
-function vSync(){refreshSpots();document.querySelectorAll('.vspot').forEach(s=>s.classList.toggle('done',visited.has(s.dataset.id)))}
-function vVisit(l){const first=!visited.has(l.id);visited.add(l.id);save.visited=[...visited];persist();vSync();
-  if(first){blip(784,.08);if(visited.size===LOCS.length)setTimeout(()=>{fanfare();toast('★ Achievement unlocked!<small>Explorer of Paper Land — you visited every place.</small>')},700)}}
-function vOpen(i){const s=VST[i],wrap=$('#vmap'),sc=vcv.getBoundingClientRect().width/VW;
-  wrap.scrollTo({top:Math.max(0,(s.cy-CROP[i][3])*sc-110),behavior:'smooth'});
-  vVisit(s.l);setTimeout(()=>openDialog(s.l),280)}
-function vdraw(ts){
-  const dt=Math.min(.05,(ts-vLast)/1000||0);vLast=ts;const tt=ts/1000;
-  const wrap=$('#vmap');
-  if(wrap&&vcv){
-    const sc=vcv.getBoundingClientRect().width/VW, center=(wrap.scrollTop+wrap.clientHeight*.46)/sc;
-    // target = path sample nearest the screen centre (never beyond the ends)
-    let lo=0,hi=vpath.length-1;while(lo<hi){const m=(lo+hi)>>1;if(vpath[m].y<center)lo=m+1;else hi=m}
-    const target=Math.max(0,Math.min(vpath.length-1,lo));
-    const diff=target-vp.k, sp=Math.min(Math.abs(diff),160*dt+Math.abs(diff)*3*dt);
-    if(Math.abs(diff)>.5){const prev=vpath[Math.round(vp.k)];vp.k+=Math.sign(diff)*sp;const cur=vpath[Math.round(vp.k)];
-      if(Math.abs(cur.x-prev.x)>.05)vp.flip=cur.x<prev.x;vStepT+=dt;if(vStepT>.16){vStepT=0;vFrame^=1;blip(vFrame?220:180,.03,'square',.015)}}
-    // which landmark is the guide at?
-    let near=-1;vstopIdx.forEach((si,i)=>{if(Math.abs(vp.k-si)<48)near=i});
-    if(near!==vNear){vNear=near;const chip=$('#vchip');
-      if(near>=0){const l=LOCS[near];chip.innerHTML=`📍 <b>${l.name}</b><span>Tap to explore ›</span>`;chip.classList.add('on');vVisit(l)}else chip.classList.remove('on')}
-    $('#vchip').classList.toggle('hide',$('#dlg').classList.contains('on')||$('#questPanel').classList.contains('on'));
-    // draw
-    vctx.drawImage(vbase,0,0);
-    for(let i=0;i<30;i++){const y=40+((i*97)%(VH-60)),x=i%2?3+(i%5):VW-8+(i%4);if(((tt*2+i)|0)%3===0){vctx.fillStyle='#cfeaf7';vctx.fillRect(x,y,3,1)}}
-    const R2=(x,y,w,h,c)=>{vctx.fillStyle=c;vctx.fillRect(x|0,y|0,w|0,h|0)};
-    // Hoi An lanterns, café steam, quest "!", junk boat
-    {const s=VST[2];R2(s.cx-26,s.cy-18,52,1,'#5a3a22');[-22,-11,0,11,20].forEach((dx,i)=>{const on=((tt*2+i)|0)%2;R2(s.cx+dx,s.cy-17,3,4,INK);R2(s.cx+dx,s.cy-16,3,2,on?'#ff5a4a':'#d9343a')})}
-    {const s=VST[1];for(let i=0;i<3;i++){const yy=s.cy-14-((tt*8+i*5)%10);R2(s.cx-15+((i+(tt|0))%2),yy,1,1,'#ffffff')}}
-    {const s=VST[5],qb=Math.round(Math.abs(Math.sin(tt*3))*3);R2(s.cx+12,s.cy-46-qb,3,6,'#ffd25e');R2(s.cx+12,s.cy-39-qb,3,2,'#ffd25e')}
-    {const s=VST[4],bx=Math.round(VW-30+Math.sin(tt*.6)*4),by=s.cy+18+Math.round(Math.sin(tt*2));
-      R2(bx,by,22,4,INK);R2(bx+1,by+1,20,2,'#6b4329');[[4,10],[11,13],[17,9]].forEach(([mx,mh])=>{R2(bx+mx,by-mh-1,1,mh+1,INK);for(let i=0;i<mh-2;i++)R2(bx+mx+1,by-mh+i,Math.round(2+i*.4),1,i%3===0?'#a8341f':'#c8462f')})}
-    // guide
-    const p=vpath[Math.round(vp.k)];R2(Math.round(p.x)-4,Math.round(p.y)+1,9,2,'#00000033');
-    drawSprite(vctx,save.guide||'bean',Math.round(p.x)-6,Math.round(p.y)-13-(Math.abs(target-vp.k)>.5&&vFrame?1:0),vp.flip);
-  }
-  requestAnimationFrame(vdraw);
-}
-
 /* ---------- enter world ---------- */
 let running=false;
 function enterWorld(returning){
   show('world');const g=GUIDES[save.guide];
   spriteCanvas($('#hudFace'),save.guide);$('#hudName').textContent=g.name;refreshSpots();
-  if(MOBILE){setupVMap()}else if(!running){running=true;requestAnimationFrame(draw)}
-  current={name:'Paper Land',lines:[returning?g.back:g.hello,MOBILE?'Scroll down and I’ll walk you through Paper Land. Tap a place to look inside.':'Click any place on the map — or press 1 to 6 — and I’ll walk you there.']};
+  if(!running){running=true;requestAnimationFrame(draw)}
+  current={name:'Paper Land',lines:[returning?g.back:g.hello,'Click any place on the map — or press 1 to 6 — and I’ll walk you there.']};
   $('#who').innerHTML=`${g.name}<small>@ Paper Land</small>`;spriteCanvas($('#pface'),save.guide);
   $('#dlgExtra').innerHTML='';$('#choices').innerHTML='';lines=current.lines;li=0;$('#dlg').classList.add('on');typeLine();
   current={...current,go:null};
