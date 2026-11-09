@@ -103,6 +103,24 @@ const NOTES=[
 ];
 
 const FREE_SHIP = 60;
+
+/* ---------- Shopify checkout (cart permalink) ---------- */
+const SHOPIFY = {
+  domain: '2yiqce-va.myshopify.com',
+  // website product id -> Shopify variant id (products share the same handle in Shopify)
+  variants: {
+    'iced-coffee':'50200969904387','alleyway':'50200969937155','street-food':'50200969969923',
+    'arvo':'50200970002691','brekkie':'50200970035459','cuppa':'50200970068227',
+    'someday':'50200970100995','pocket-notes':'50200970297603','saigon-set':'50200970330371','arvo-set':'50200970363139',
+    'crabit-liberica':'50200970395907','crabit-robusta':'50200970428675','crabit-excela':'50200970461443','crabit-arabica':'50200970494211',
+    'crabit-white-coffee':'50200970526979','crabit-iced-black':'50200970559747','crabit-coconut':'50200970592515','crabit-iced-milk':'50200970625283',
+    'crabit-americano':'50200970658051','crabit-espresso':'50200970690819','crabit-latte':'50200970723587'
+  }
+};
+function checkoutUrl(){
+  const lines=Object.keys(cart).filter(id=>SHOPIFY.variants[id]&&cart[id]>0).map(id=>SHOPIFY.variants[id]+':'+cart[id]);
+  return lines.length?`https://${SHOPIFY.domain}/cart/${lines.join(',')}`:null;
+}
 const $ = (s,el=document)=>el.querySelector(s);
 const money = n => '$'+n.toFixed(2);
 const titleOf = id => { const p=PRODUCTS[id]; if(p.title) return p.title; if(p.set) return p.name; if(p.spiral) return 'Pocket Notes'; return p.name.replace(/\b\w/g,c=>c.toUpperCase())+' Notebook'; };
@@ -174,9 +192,9 @@ function chrome(){
     <div class="dhead"><h3>Your Cart</h3><button id="cartClose">Close</button></div>
     <div class="ship" id="ship"></div><div class="items" id="items"></div>
     <div class="dfoot"><div class="tot"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
-      <small>Shipping and GST calculated at checkout. Prices in AUD.</small>
-      <button class="btn solid" id="checkout">Continue to Checkout</button>
-      <div class="msg" id="msg">Online checkout opens with our first release — your cart is saved in this browser.</div></div>
+      <small>Secure checkout by Shopify. Shipping and GST calculated at checkout. Prices in AUD.</small>
+      <a class="btn solid" id="checkout" href="#" target="_blank" rel="noopener">Continue to Checkout</a>
+      <div class="msg" id="msg">Your cart is empty — add a notebook first.</div></div>
   </aside>`;
 
   // dropdown
@@ -189,7 +207,7 @@ function chrome(){
   $('#clubForm').addEventListener('submit',e=>{e.preventDefault();e.target.style.display='none';$('#clubOk').style.display='block'});
   // cart
   $('#cartOpen').onclick=openCart; $('#cartClose').onclick=closeCart; $('#scrim').onclick=closeCart;
-  $('#checkout').onclick=()=>{$('#msg').style.display='block'};
+  $('#checkout').onclick=e=>{const u=checkoutUrl();if(!u){e.preventDefault();$('#msg').style.display='block'}};
 }
 
 const DRAWER=`<div class="scrim" id="scrim"></div>
@@ -197,14 +215,14 @@ const DRAWER=`<div class="scrim" id="scrim"></div>
     <div class="dhead"><h3>Your Cart</h3><button id="cartClose">Close</button></div>
     <div class="ship" id="ship"></div><div class="items" id="items"></div>
     <div class="dfoot"><div class="tot"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
-      <small>Shipping and GST calculated at checkout. Prices in AUD.</small>
-      <button class="btn solid" id="checkout">Continue to Checkout</button>
-      <div class="msg" id="msg">Online checkout opens with our first release — your cart is saved in this browser.</div></div>
+      <small>Secure checkout by Shopify. Shipping and GST calculated at checkout. Prices in AUD.</small>
+      <a class="btn solid" id="checkout" href="#" target="_blank" rel="noopener">Continue to Checkout</a>
+      <div class="msg" id="msg">Your cart is empty — add a notebook first.</div></div>
   </aside>`;
 function chromeBare(){
   document.body.insertAdjacentHTML('beforeend',DRAWER);
   $('#cartClose').onclick=closeCart; $('#scrim').onclick=closeCart;
-  $('#checkout').onclick=()=>{$('#msg').style.display='block'};
+  $('#checkout').onclick=e=>{const u=checkoutUrl();if(!u){e.preventDefault();$('#msg').style.display='block'}};
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCart()});
 }
 
@@ -221,6 +239,7 @@ function drawCart(){
   const sub=ids.reduce((s,id)=>s+cart[id]*PRODUCTS[id].price,0);
   document.querySelectorAll('#cartCount,.cartCount').forEach(el=>el.textContent=count);
   $('#subtotal').textContent=money(sub);
+  {const a=$('#checkout'),u=checkoutUrl();if(a){a.href=u||'#';$('#msg').style.display='none'}}
   const left=Math.max(0,FREE_SHIP-sub);
   $('#ship').innerHTML=(left>0?`You're ${money(left)} away from free shipping.`:`You've unlocked free shipping.`)+`<div class="bar"><i style="width:${Math.min(100,sub/FREE_SHIP*100)}%"></i></div>`;
   $('#items').innerHTML=ids.length?ids.map(id=>{const p=PRODUCTS[id];const bg=p.imgs?`url(${p.imgs[0]}) center/cover`:p.set?PRODUCTS[p.set[0]].bg:p.bg;
