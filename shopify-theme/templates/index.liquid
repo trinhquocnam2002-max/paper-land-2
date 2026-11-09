@@ -1,0 +1,69 @@
+{% layout 'game' %}
+
+
+<!-- TITLE -->
+<section class="screen on" id="title" aria-label="Title screen">
+  <div class="t-island"></div>
+  <div class="t-wrap">
+    <div class="t-logo">PAPER<br>LAND</div>
+    <div class="t-sub">a cosy stationery adventure</div>
+    <div class="loader" id="loader"><div class="lbar"><i id="lfill"></i></div><div class="lmsg" id="lmsg">Sharpening pencils…</div></div>
+    <button class="pxbtn start" id="startBtn">▶ Press to Start</button>
+    <a href="/collections/all" class="pxbtn skip">Skip to shop →</a>
+  </div>
+  <div class="t-foot">Designed in Adelaide · Inspired by Saigon · <a href="/pages/home">visit the regular website</a></div>
+</section>
+
+<!-- GUIDE SELECT -->
+<section class="screen" id="select" aria-label="Choose your guide">
+  <div class="s-wrap">
+    <h2>CHOOSE YOUR GUIDE</h2>
+    <p>Who will show you around Paper Land?</p>
+    <div class="guides" id="guides"></div>
+  </div>
+</section>
+
+<!-- WORLD -->
+<section class="screen" id="world" aria-label="Map of Paper Land">
+  <div class="hud">
+    <div class="hud-l">
+      <button class="chip" id="hudGuide" title="Change guide"><canvas id="hudFace" width="12" height="14"></canvas><span id="hudName">Guide</span></button>
+      <span class="chip" id="hudPlaces">Places 0/6</span>
+      <span class="chip badge" id="hudBadge">★ Explorer</span>
+    </div>
+    <div class="hud-r">
+      <button class="chip" id="questBtn">📜 Quests</button>
+      <button class="chip" id="soundBtn" aria-pressed="true">♪ On</button>
+      <button class="chip" id="bagBtn">👜 Bag <span class="cartCount">0</span></button>
+      <a class="chip" href="/pages/home"><span class="hide-sm">Exit to&nbsp;</span>website →</a>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="mapbox" id="mapbox">
+      <canvas id="map" width="320" height="200" aria-hidden="true"></canvas>
+      <div class="hint" id="hint"><span class="hide-sm">Click a place (or press 1–6) to walk there</span><span class="show-sm">Tap a place to walk there</span></div>
+    </div>
+  </div>
+  <div class="dlg" id="dlg" role="dialog" aria-live="polite">
+    <div class="pxbox">
+      <div class="portrait"><canvas id="pface" width="12" height="14"></canvas></div>
+      <div>
+        <div class="who" id="who"></div>
+        <div class="say" id="say"></div>
+        <div id="dlgExtra"></div>
+        <div class="choices" id="choices"></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel" id="questPanel" role="dialog" aria-label="Quest board">
+    <div class="board">
+      <button class="pxbtn close" id="questClose" style="font-size:9px">✕</button>
+      <h2>📜 QUEST BOARD</h2>
+      <p>Pin up a quest, earn a reward. New quests appear every season.</p>
+      <div class="qgrid" id="qgrid"></div>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+

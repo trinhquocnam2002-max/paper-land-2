@@ -1,0 +1,15 @@
+<section class="wrap">
+  <div class="page-head"><div class="eyebrow">Search</div><h1>Find a notebook</h1>
+    <form action="{{ routes.search_url }}" method="get" class="cform" style="margin-top:20px;max-width:520px;padding:20px">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search notebooks" aria-label="Search">
+      <button class="btn solid" type="submit">Search</button>
+    </form></div>
+  <div style="padding:30px 0 100px">
+    {%- if search.performed -%}
+      <p class="count">{{ search.results_count }} results for “{{ search.terms | escape }}”</p>
+      <ul style="list-style:none;margin-top:16px;display:grid;gap:12px">
+        {%- for item in search.results -%}<li><a class="link" href="{{ item.url }}">{{ item.title }}</a></li>{%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>

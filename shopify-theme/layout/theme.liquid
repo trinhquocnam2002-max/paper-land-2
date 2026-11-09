@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  {% render 'pl-head' %}
+  {{ content_for_header }}
+</head>
+{%- liquid
+  assign pg = 'other'
+  if template.name == 'product'
+    assign pg = 'product'
+  elsif template.name == 'collection'
+    assign pg = 'shop'
+  elsif template.name == 'list-collections'
+    assign pg = 'collections'
+  elsif template.name == 'page' and template.suffix != blank
+    assign pg = template.suffix
+  endif
+-%}
+<body data-page="{{ pg }}"{% if product %} data-handle="{{ product.handle }}"{% endif %}{% if collection %} data-collection="{{ collection.handle }}"{% endif %}>
+  <div id="site-header"></div>
+  <main>
+    {{ content_for_layout }}
+  </main>
+  <div id="site-footer"></div>
+  {% render 'pl-data' %}
+  <script src="{{ 'app.js' | asset_url }}" defer></script>
+</body>
+</html>

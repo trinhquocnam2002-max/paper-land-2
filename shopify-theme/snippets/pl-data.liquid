@@ -1,0 +1,20 @@
+{%- comment -%} Live product data for the Paper Land scripts (prices, variants, images, stock). {%- endcomment -%}
+<script>
+  window.PL_ASSET_BASE = {{ 'crabit-latte.jpg' | asset_url | split: 'crabit-latte.jpg' | first | json }};
+  window.PL_SHOP = {
+    currency: {{ shop.currency | json }},
+    products: {
+      {%- for p in collections.all.products -%}
+        {{ p.handle | json }}: {
+          "id": {{ p.selected_or_first_available_variant.id | json }},
+          "price": {{ p.price | divided_by: 100.0 | json }},
+          "title": {{ p.title | json }},
+          "vendor": {{ p.vendor | json }},
+          "type": {{ p.type | json }},
+          "available": {{ p.available | json }},
+          "imgs": [{%- for img in p.images limit: 4 -%}{{ img | image_url: width: 900 | prepend: 'https:' | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    }
+  };
+</script>

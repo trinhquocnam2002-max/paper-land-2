@@ -24,3 +24,18 @@ Products, prices and descriptions are in the `PRODUCTS` object at the top of `ap
 ## Notes
 
 This is a static site with no server. The cart is saved in the visitor's browser. The checkout, contact form and newsletter forms only show confirmation messages and do not send data.
+
+## Shopify theme
+
+`shopify-theme/` is the same site as a Shopify theme (Liquid). Products, prices,
+stock and the cart come live from Shopify; the game is the home page (`/`).
+`shopify-theme.zip` is the uploadable package (Online Store → Themes → Add theme → Upload zip).
+
+| Shopify URL | Page |
+|---|---|
+| `/` | Enter Paper Land game |
+| `/pages/home` | Regular home page |
+| `/collections/all`, `/collections/<handle>` | Shop with filters |
+| `/products/<handle>` | Product page |
+| `/collections` | Collections overview |
+| `/pages/about`, `/pages/journal`, `/pages/article#<post>`, `/pages/help` | Content pages |

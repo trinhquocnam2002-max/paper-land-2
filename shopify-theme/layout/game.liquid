@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  {% render 'pl-head' %}
+  {{ 'game.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body class="game" data-page="play" data-bare="1" data-nopopup="1">
+  {{ content_for_layout }}
+  {% render 'pl-data' %}
+  <script src="{{ 'app.js' | asset_url }}" defer></script>
+  <script src="{{ 'play.js' | asset_url }}" defer></script>
+</body>
+</html>

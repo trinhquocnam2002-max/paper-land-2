@@ -1,0 +1,25 @@
+<section class="wrap">
+  <div class="page-head"><div class="eyebrow">Your Cart</div><h1>Ready to write?</h1></div>
+  {%- if cart.item_count == 0 -%}
+    <p style="padding:20px 0 100px">Your cart is empty — for now. <a class="link" href="/collections/all">Shop notebooks</a></p>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" style="padding:30px 0 100px;max-width:760px">
+      {%- for item in cart.items -%}
+        <div class="item" style="grid-template-columns:80px 1fr auto">
+          <a href="{{ item.url }}" class="sw" style="width:80px;height:100px;background:#E7DED2 {% if item.image %}url({{ item.image | image_url: width: 200 }}) center/cover{% endif %}"></a>
+          <div><h5><a href="{{ item.url }}">{{ item.product.title }}</a></h5><small>{{ item.final_price | money }}</small>
+            <div class="qty"><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width:60px;padding:4px"></div></div>
+          <strong style="font-weight:400">{{ item.final_line_price | money }}</strong>
+        </div>
+      {%- endfor -%}
+      <div class="dfoot" style="padding:24px 0">
+        <div class="tot"><span>Subtotal</span><span>{{ cart.total_price | money }}</span></div>
+        <small>Shipping and GST calculated at checkout.</small>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn" type="submit" name="update">Update cart</button>
+          <button class="btn solid" type="submit" name="checkout">Checkout</button>
+        </div>
+      </div>
+    </form>
+  {%- endif -%}
+</section>
